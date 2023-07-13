@@ -30,7 +30,7 @@
                         
                             <ul class="list-unstyled">
                                 @php
-                                    $list = explode(', ', $vacancy->qualifications);
+                                    $list = explode(';', $vacancy->qualifications);
                                 @endphp
                                 @foreach($list as $item)
                                     <li>
@@ -42,8 +42,13 @@
                         </div>
 
                         @if($vacancy->situation == 'open')
+                           
+                            @if(!empty($vacancy->applications->first()->user_id) == isset(auth()->user()->id) && isset(auth()->user()->id))
+                            <h3 class="text-primary">Você já se candidatou para essa vaga</h3>
+                            @else
                             <div class="">
-                                <form>
+                                <form action="{{ url('/aplicar-vaga/'.base64_encode($vacancy->id)) }}" method="POST">
+                                    @csrf
                                     <div class="row g-3">
                                         <div class="col-8">
                                             <button class="btn btn-primary w-100 py-3 fs-4" type="submit">Aplicar Agora</button>
@@ -51,6 +56,7 @@
                                     </div>
                                 </form>
                             </div>
+                            @endif
                         @else
                             <div>
                                 <h3 class="text-danger fst-italic">
@@ -72,7 +78,7 @@
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Sálario: R$ {{ $vacancy->salary_intro }} - R$ {{ $vacancy->salary_final }}</p>
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Localização: {{ $vacancy->localization }}</p>
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Modelo: {{ $vacancy->model }}</p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Regime: {{ $vacancy->hiring_type }}</p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Regime: {{ strtoupper($vacancy->hiring_type) }}</p>
                         </div>
                         <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
                             <h4 class="mb-4">Detalhes da Empresa</h4>

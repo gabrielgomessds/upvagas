@@ -113,6 +113,7 @@
                             || request()->is('admin/vagas/*/editar') 
                             || request()->is('admin/vagas/buscar/*')
                             || request()->is('admin/usuario/*/vagas')
+                            || request()->is('admin/categorias/*/vagas')
                             ) active @endif">
             <a href="{{ url('admin/vagas') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-layer"></i>

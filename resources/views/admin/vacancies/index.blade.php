@@ -34,10 +34,10 @@
     <div class="container-xxl flex-grow-1 container-p-y">
       <div class="card">
 
-        <h5 class="card-header">Vagas Cadastradas 
+        <h5 class="card-header">Vagas Cadastradas - <b class="text-primary">{{ isset($category) ? $category->title : ""}}</b>
         @if(isset($company))
         de <b class="text-primary">{{ $company->name }}</b>/
-          <a href="{{ url('/admin/empresas/cadastro/'.base64_encode($company->id)) }}"><button class="btn btn-primary btn-sm">Adicionar</button> <a>
+          <a href="{{ url('/admin/vagas/cadastro/'.base64_encode($company->id)) }}"><button class="btn btn-primary btn-sm">Adicionar</button> <a>
           @endif
         </h5>
         <div class="table-responsive text-nowrap">

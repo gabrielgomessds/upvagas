@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminVacanciesController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\Api\WebControllerApi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/* Route::controller(WebControllerApi::class)->group(function(){
+    Route::get('/api/vagas', 'vacancyList');
+}); */
 
 //WebController
 Route::controller(WebController::class)->group(function(){
@@ -55,6 +60,10 @@ Route::controller(WebController::class)->group(function(){
     //Search
     Route::post('/buscar/vagas', 'searchVacancies');
     Route::get('/busca/de/{key_words}/{localization}/{category}', 'vacanciesSearched');
+
+    //Vacancies
+    Route::post('/aplicar-vaga/{vacancy_id}', 'application');
+    Route::get('/aplicar-vaga/{vacancy_id}', 'application');
 
     //Messages
    /*  Route::get('/mensagem', 'message'); */
@@ -132,6 +141,8 @@ Route::middleware(['auth'])->group(function(){
        Route::controller(AdminVacanciesController::class)->group(function(){
         Route::get('/admin/vagas', 'home');
         Route::get('/admin/empresa/{company_id}/vagas', 'vacancyCompanyList');
+
+        Route::get('/admin/categorias/{category_id}/vagas', 'vacanciesCategoriesList');
         Route::get('/admin/vaga/{vacancy_id}', 'detail');
 
         Route::post('/admin/vagas/buscar','search');
@@ -152,7 +163,7 @@ Route::middleware(['auth'])->group(function(){
      /* Categories */
      Route::controller(AdminCategoriesController::class)->group(function(){
         Route::get('/admin/categorias', 'home');
-        Route::get('/admin/categorias/{category_id}/vagas', 'categoriesVacanciesList');
+        
 
         Route::post('/admin/categorias/buscar','search');
         Route::get('/admin/categorias/buscar/{search}','home');

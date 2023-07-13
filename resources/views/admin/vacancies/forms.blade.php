@@ -123,7 +123,7 @@
     @else
     <h4 class="fw-bold py-3 mb-4">
       <i class="menu-icon bg-primary text-white p-2 rounded-3 tf-icons bx bx-layer"></i>
-      Atualizar Vaga de {{$formEdit->title}} - {{$formEdit->company->name}}
+      Atualizar {{$formEdit->title}} - {{$formEdit->company->name}}
     </h4>
 
     <div class="row">

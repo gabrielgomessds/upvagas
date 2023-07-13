@@ -57,7 +57,7 @@
                 <td>{{ $category->title }}</td>
                 <td> <i class="{{ $category->icon }} fs-5 text-primary" ></i> </td>
                 <td>{{ $category->vacancies->count() }}</td>
-                <td><a href="{{ '/admin/categorias/'.$category->id.'/vagas' }}"><button class="btn btn-sm btn-primary">Ver <i class='bx bx-file'></i></button> </td>
+                <td><a href="{{ '/admin/categorias/'.base64_encode($category->id).'/vagas' }}"><button class="btn btn-sm btn-primary">Ver <i class='bx bx-file'></i></button> </td>
                 <td><a href="{{ url('/admin/categoria/'.$category->id.'/editar') }}">
                     <i class='bx bxs-pencil'></i></a>
                   <a href="#" class="button-modal-list" data-title-modal="Tem certeza que deseja excluir essa categoria?" data-url-modal="{{ url('/admin/categoria/'.$category->id.'/excluir') }}" data-bs-toggle="modal" data-bs-target="#modalCenter"><i class='bx bxs-trash'></i></a>

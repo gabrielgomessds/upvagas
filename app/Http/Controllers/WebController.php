@@ -6,6 +6,7 @@ use App\Http\Requests\ContactRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterPersonRequest;
 use App\Http\Requests\searchVacanciesRequest;
+use App\Models\Applications;
 use App\Models\Categories;
 use App\Models\Contacts;
 use App\Models\User;
@@ -159,6 +160,8 @@ class WebController extends Controller
 
     }
 
+    /* SEARCH  VACANCIES*/
+
     public function vacanciesSearched(Request $request)
     {
         $category = Categories::where('slug','=',$request->category)->firstOrFail();
@@ -171,6 +174,20 @@ class WebController extends Controller
                 ->paginate(5);
 
           return view('web.vacancies.searchVacancies', compact('vacancies', 'categories'));
+    }
+
+    /* APPLICATIONS */
+    public function application(Request $request)
+    {
+        $vacancy = Vacancies::findOrFail(base64_decode($request->vacancy_id));
+        $application = new Applications();
+        $application->vacancy_id = base64_decode($request->vacancy_id);
+        $application->user_id = auth()->user()->id;
+        $application->situation = 'sent';
+        $application->save();
+
+        return redirect(url('/vaga/'.$vacancy->slug));
+       
     }
 
     /* MESSAGES */

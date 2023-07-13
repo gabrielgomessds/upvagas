@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vacancies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdminVacanciesController extends Controller
 {
@@ -104,6 +105,15 @@ class AdminVacanciesController extends Controller
 
         }
        
+    }
+
+    public function vacanciesCategoriesList(Request $request)
+    { 
+    
+        $vacancies = Vacancies::where("category_id","=",base64_decode($request->category_id))->orderBy('id', 'DESC')->paginate(5);
+        $category = Categories::find(base64_decode($request->category_id));
+
+        return view('admin.vacancies.index', compact('vacancies', 'category'));
     }
 
     public function vacancyCompanyList(Request $request)

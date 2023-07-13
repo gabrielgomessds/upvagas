@@ -25,14 +25,6 @@ class AdminCategoriesController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
-    public function categoriesVacanciesList(Request $request)
-    { 
-        $categories = Categories::find(base64_decode($request->category_id));
-        $vancacies = Vacancies::where("category_id","=",base64_decode($request->category_id))->orderBy('id', 'DESC')->paginate(5);
-
-        return view('admin.categories.index', compact('categories','vancacies'));
-    }
-
 
     public function search(Request $request)
     {
