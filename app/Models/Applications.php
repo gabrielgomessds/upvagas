@@ -10,8 +10,18 @@ class Applications extends Model
     use HasFactory;
 
     protected $fillable = [
-        'vancancys_id',
+        'vacancy_id',
         'user_id',
         'situation'
     ];
+
+    public function vacancies()
+    {
+        return $this->hasOne(Vacancies::class, 'vacancy_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

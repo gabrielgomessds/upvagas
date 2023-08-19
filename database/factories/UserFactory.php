@@ -16,7 +16,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $options = ['person', 'corporation', 'admin'];
+        $options = ['person', 'corporate', 'admin'];
 
         return [
             'name' => $this->faker->name(),

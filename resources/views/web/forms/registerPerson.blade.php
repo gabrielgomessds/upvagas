@@ -52,7 +52,7 @@
                                 <button class="btn btn-primary w-100 py-3" type="submit">Cadastro</button>
                             </div>
 
-                            <p>Quer encontrar os melhores profissionais para sua empresa? <a href="{{ url('cadastro/empresa') }}">Clique aqui</a></p>
+                            <p>Quer encontrar os melhores profissionais para sua empresa? <a href="{{ url('cadastro/corporativo') }}">Clique aqui</a></p>
                         </div>
                     </form>
                 </div>

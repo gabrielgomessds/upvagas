@@ -1,31 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Corporate;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VacanciesRequest;
 use App\Models\Applications;
 use App\Models\Categories;
 use App\Models\Companys;
-use App\Models\User;
 use App\Models\Vacancies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Symfony\Component\VarDumper\VarDumper;
 
-class AdminVacanciesController extends Controller
+class CorporateVacanciesController extends Controller
 {
     public function home(Request $request)
     {
-        if($request->search){
-            $vacancies = Vacancies::where('title', 'like', '%'.$request->search.'%')
-            ->orderBy('id', 'DESC')->paginate(5);
-
-        }else{
-            $vacancies = Vacancies::orderBy('id', 'DESC')->paginate(5);
+        if ($request->search) {
+            $vacancies = Vacancies::where('title', 'like', '%' . $request->search . '%')
+                ->orderBy('id', 'DESC')
+                ->paginate(5);
+        } else {
+            $vacancies = Vacancies::select('vacancies.*')
+                ->join('companys', 'vacancies.company_id', '=', 'companys.id')
+                ->join('users', 'companys.user_id', '=', 'users.id')
+                ->where('users.id', '=', Auth::user()->id)
+                ->orderBy('vacancies.id', 'DESC')
+                ->paginate(5);
         }
-       
-        return view('admin.vacancies.index', compact('vacancies'));
+    
+        return view('corporate.vacancies.index', compact('vacancies'));
     }
 
     public function forms(Request $request)
@@ -35,12 +40,12 @@ class AdminVacanciesController extends Controller
         $categories = Categories::all();
 
         
-        return view('admin.vacancies.forms', compact('formEdit', 'company', 'categories'));
+        return view('corporate.vacancies.forms', compact('formEdit', 'company', 'categories'));
     }
 
     public function search(Request $request)
     {
-        return redirect('/admin/vagas/buscar/'.$request->search);
+        return redirect('/corporativo/vagas/buscar/'.$request->search);
     }
 
     public function formsAcitions(VacanciesRequest $request, int $company_id = null)
@@ -68,9 +73,9 @@ class AdminVacanciesController extends Controller
             
             
             if($vacancy->save()){
-                return redirect('/admin/vagas')->with('message', 'Vaga para '.$vacancy->company->name.' cadastrada com sucesso!');
+                return redirect('/corporativo/vagas')->with('message', 'Vaga para '.$vacancy->company->name.' cadastrada com sucesso!');
             }else{
-                return redirect('/admin/vagas/cadastro/'.base64_encode($vacancy->company_id))->with('message', 'Erro ao cadastrar o vaga');
+                return redirect('/corporativo/vagas/cadastro/'.base64_encode($vacancy->company_id))->with('message', 'Erro ao cadastrar o vaga');
 
             }
             
@@ -98,9 +103,9 @@ class AdminVacanciesController extends Controller
             $vacancy->slug = Str::slug($validatedData['title']);
             
             if($vacancy->update()){
-                return redirect('/admin/vaga/'.$company_id.'/editar')->with('message', 'Vaga atualizado com sucesso!');
+                return redirect('/corporativo/vaga/'.$company_id.'/editar')->with('message', 'Vaga atualizado com sucesso!');
             }else{
-                return redirect('/admin/vagas')->with('message', 'Erro ao atualizar o vaga');
+                return redirect('/corporativo/vagas')->with('message', 'Erro ao atualizar o vaga');
 
             }
 
@@ -114,7 +119,7 @@ class AdminVacanciesController extends Controller
         $vacancies = Vacancies::where("category_id","=",base64_decode($request->category_id))->orderBy('id', 'DESC')->paginate(5);
         $category = Categories::find(base64_decode($request->category_id));
 
-        return view('admin.vacancies.index', compact('vacancies', 'category'));
+        return view('corporate.vacancies.index', compact('vacancies', 'category'));
     }
 
     public function vacancyCompanyList(Request $request)
@@ -122,7 +127,7 @@ class AdminVacanciesController extends Controller
         $company = Companys::find(base64_decode($request->company_id));
         $vacancies = Vacancies::where("company_id","=",base64_decode($request->company_id))->orderBy('id', 'DESC')->paginate(5);
 
-        return view('admin.vacancies.index', compact('vacancies','company'));
+        return view('corporate.vacancies.index', compact('vacancies','company'));
     }
 
     public function delete(Request $request)
@@ -130,7 +135,7 @@ class AdminVacanciesController extends Controller
         $vancacy = Vacancies::findOrFail($request->vacancy_id);
 
         $vancacy->delete();
-        return redirect('/admin/vagas')->with('message', 'Vaga deletada com sucesso!');
+        return redirect('/corporativo/vagas')->with('message', 'Vaga deletada com sucesso!');
 
     }
 
@@ -138,6 +143,6 @@ class AdminVacanciesController extends Controller
     {
         $vacancy = Vacancies::where("id","=",base64_decode($request->vacancy_id))->get();
         $applicationsCount = Applications::where("vacancy_id","=",base64_decode($request->vacancy_id))->count();
-        return view('admin.vacancies.details', compact('vacancy', 'applicationsCount'));
+        return view('corporate.vacancies.details', compact('vacancy', 'applicationsCount'));
     }
 }

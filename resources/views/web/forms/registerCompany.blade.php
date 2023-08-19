@@ -10,46 +10,53 @@
                     <h5>Encontre os melhores talentos para sua empresa</h5>
                 </div>
                 <div class="row g-4">
-                    
-                    <div class="col-md-12 mb-4 d-flex justify-content-center align-items-center">
-                        <div class="wow fadeInUp" data-wow-delay="0.5s">
-                            <form>
-                                <div class="row g-3 d-flex justify-content-center align-items-center">
-                                    <div class="col-md-8">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Digite seu nome">
-                                            <label for="name">Nome Completo: </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail">
-                                            <label for="email">E-mail: </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="form-floating">
-                                            <input type="password" class="form-control" id="password" placeholder="Digite sua senha">
-                                            <label for="password">Senha:</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="form-floating">
-                                            <input type="password" class="form-control" id="confirm_password" placeholder="Confirmar sua senha">
-                                            <label for="confirm_password">Confirmar senha:</label>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="col-8">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Cadastro</button>
-                                    </div>
 
-                                    <p>Quer encontrar as melhores vagas de emprego? <a href="{{ url('cadastro/pessoa') }}">Clique aqui</a></p>
-                                </div>
-                            </form>
-                        </div>
+<div class="col-md-12 mb-4 ">
+    <div class="wow fadeInUp " data-wow-delay="0.5s">
+        <form action="{{ url('/cadastro/corporativo') }}" method="POST">
+            @csrf
+            <div class="row g-3 d-flex justify-content-center align-items-center">
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Digite seu nome">
+                        <label for="name">Nome Completo: </label>
+                        <input type="hidden" value="corporate" name="type">
+                        @error('name') <small class="text-danger">{{$message}}</small> @enderror
                     </div>
                 </div>
+                <div class="col-md-8">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu e-mail">
+                        <label for="email">E-mail: </label>
+                        @error('email') <small class="text-danger">{{$message}}</small> @enderror
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Digite sua senha">
+                        <label for="password">Senha:</label>
+                        @error('password') <small class="text-danger">{{$message}}</small> @enderror
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirmar sua senha">
+                        <label for="confirm_password">Confirmar senha:</label>
+                    </div>
+                </div>
+
+                <div class="col-8">
+                    <button class="btn btn-primary w-100 py-3" type="submit">Cadastro</button>
+                </div>
+
+                <p>Quer encontrar os melhores profissionais para sua empresa? <a href="{{ url('cadastro/empresa') }}">Clique aqui</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
             </div>
         </div>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterCorporateRequest;
+use App\Http\Requests\RegisterCorporativeRequest;
 use App\Http\Requests\RegisterPersonRequest;
 use App\Http\Requests\searchVacanciesRequest;
 use App\Models\Applications;
@@ -31,7 +33,14 @@ class WebController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->intended('admin/home');
+            if(Auth::user()->type == "admin"){
+                return redirect()->intended('admin/home');
+            }elseif(Auth::user()->type == "corporate"){
+                return redirect()->intended('corporativo/home');
+            }else{
+                return redirect()->intended('usuario/home');
+            }
+           
         }
 
         return view('web.forms.login');
@@ -48,9 +57,18 @@ class WebController extends Controller
             
        }
 
-       $request->session()->regenerate();
-    
-       return redirect()->intended('admin/home');
+       $user = User::find(Auth::user()->id);
+       
+       if($user->type == "admin"){
+            $request->session()->regenerate();
+            return redirect()->intended('admin/home');
+       }else if($user->type == "corporate"){
+            $request->session()->regenerate();
+            return redirect()->intended('corporativo/home');
+       }else{
+             $request->session()->regenerate();
+            return redirect()->intended('usuario/home');
+       }
 
     }
 
@@ -95,6 +113,31 @@ class WebController extends Controller
     public function registerCompany()
     {
         return view('web.forms.registerCompany');
+    }
+
+    
+    public function registerCorporateActions(RegisterCorporateRequest $request)
+    {
+
+        $validatedData = $request->validated();
+        $user = new User();
+
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->password = Hash::make($validatedData['password']);
+        $user->type = $validatedData['type'];
+
+        if($user->save()){
+            if(!Auth::attempt($request->only('email', 'password'))){
+                return redirect('login')
+                ->withErrors("E-mail ou senha incorretos")
+                ->withInput();
+         }
+
+       $request->session()->regenerate();
+    
+       return redirect()->intended('corporativo/home');
+    }
     }
 
     /* CONTACT */

@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('corporate.layout')
 
 @section('content')
 
@@ -27,11 +27,10 @@
               @endforeach
             </div>
             @endif
-            <label class="form-label fs-5 text-primary fw-bold" for="basic-default-fullname">Usuário: {{$user->name}}</label>
-            <form action="{{ url('/admin/empresas/cadastro') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('/corporativo/empresas/cadastro') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="mb-3">
-                <input type="hidden" name="user_id" value="{{$user->id}}" id="">
+              <input type="hidden" name="user_id" value="{{Auth()->user()->id}}" id="">
                 <label class="form-label" for="basic-default-fullname">Nome:</label>
                 <input type="text" name="name" class="form-control" id="basic-default-fullname" placeholder="Nome da Empres" />
                 <input type="hidden" name="action" value="create">
@@ -76,8 +75,7 @@
               @endforeach
             </div>
             @endif
-            <label class="form-label fs-5 text-primary fw-bold" for="basic-default-fullname">Usuário: {{$formEdit->user->name}}</label>
-            <form action="{{ url('/admin/empresa/'.$formEdit->id.'/editar') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('/corporativo/empresa/'.$formEdit->id.'/editar') }}" method="POST" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="mb-3">

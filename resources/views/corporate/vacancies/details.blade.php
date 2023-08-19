@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('corporate.layout')
 
 @section('title', 'Detalhes da Vaga')
 
@@ -91,7 +91,7 @@
 
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="mb-3 col-md-5">
-                                    <a href="{{ url('/admin/vaga/aplicacoes/'.base64_encode($vac->id)) }}"><button class="btn btn-primary fw-bold fs-4" {{ $applicationsCount > 0 ? '' : 'disabled'  }}> Ver aplicações <span class="bg-white text-primary p-1 rounded">{{ $applicationsCount }}</span></button></a>
+                                    <a href="{{ $applicationsCount > 0 ? url('/corporativo/vaga/aplicacoes/'.base64_encode($vac->id)) : '#'  }}" aria-disabled="true"><button class="btn btn-primary fw-bold fs-4" {{ $applicationsCount > 0 ? '' : 'disabled'  }}> Ver aplicações <span class="bg-white text-primary p-1 rounded">{{ $applicationsCount }}</span></button></a>
                                 </div>
                             </div>
 
