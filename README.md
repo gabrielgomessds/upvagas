@@ -33,22 +33,27 @@
 <h3>:dart: Como usar:</h3>
 <ol>
   <li>Configurar o arquivo .env: Faça uma cópia do arquivo .env.example e renomeie-o para .env. Em seguida, configure as variáveis de ambiente necessárias, como conexões de banco de dados, chaves de aplicativo, etc.</li>
+
   
  
     cp .env.example .env
     
   <li>Abra o arquivo .env e configure as informações apropriadas. Gerar uma chave de aplicativo: Execute o seguinte comando para gerar uma chave de aplicativo Laravel.</li>
 
+ 
     
     php artisan key:generate
 
   <li>Configurar o banco de dados: Configure sua conexão de banco de dados no arquivo .env e execute as migrações para criar as tabelas do banco de dados.</li>
   
 
+
     php artisan migrate
 
  
  <li>Iniciar o servidor de desenvolvimento: Para executar o projeto localmente, você pode usar o servidor de desenvolvimento embutido do Laravel.</li>
+
+
 
      php artisan serve
 
