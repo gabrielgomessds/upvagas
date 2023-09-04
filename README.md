@@ -32,7 +32,8 @@
 
 <h3>:dart: Como usar:</h3>
 <ol>
-  <li>Ter instalado PHP pelo menos na versão 7</li>
+  <li>Configurar o arquivo .env: Faça uma cópia do arquivo .env.example e renomeie-o para .env. Em seguida, configure as variáveis de ambiente necessárias, como conexões de banco de dados, chaves de aplicativo, etc.</li>
+  <code>cp .env.example .env</code>
   <li>Ter instalado Laravel 9</li>
   <li>Ter o xampp ou qualquer servidor local</li>
 </ol>
