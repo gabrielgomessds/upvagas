@@ -1,4 +1,4 @@
-@extends('corporate.layout')
+@extends('person.layout')
 
 @section('title', 'Detalhes da Vaga')
 
@@ -87,12 +87,6 @@
                                     <p class="fs-5"><?= $vac->qualifications; ?></p>
                                 </div>
 
-                            </div>
-
-                            <div class="d-flex justify-content-center align-items-center">
-                                <div class="mb-3 col-md-5">
-                                    <a href="{{ $applicationsCount > 0 ? url('/corporativo/vaga/aplicacoes/'.base64_encode($vac->id)) : '#'  }}" aria-disabled="true"><button class="btn btn-primary fw-bold fs-4" {{ $applicationsCount > 0 ? '' : 'disabled'  }}> Ver aplicações <span class="bg-white text-primary p-1 rounded">{{ $applicationsCount }}</span></button></a>
-                                </div>
                             </div>
 
                         </div>

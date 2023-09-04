@@ -17,6 +17,10 @@ use App\Http\Controllers\Corporate\CorporateCompanysController;
 use App\Http\Controllers\Corporate\CorporateHomeController;
 use App\Http\Controllers\Corporate\CorporateVacanciesController;
 use App\Http\Controllers\Corporative\CorporativeHomeController;
+use App\Http\Controllers\Person\PersonApplicationsController;
+use App\Http\Controllers\Person\PersonHomeController;
+use App\Http\Controllers\Person\PersonResumeController;
+use App\Http\Controllers\Person\PersonVacanciesController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -254,6 +258,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/corporativo/vagas/buscar/{search}', 'home');
 
         Route::get('/corporativo/vagas/cadastro/{company_id}', 'forms');
+        Route::get('/corporativo/vagas/cadastro', 'forms');
         Route::post('/corporativo/vagas/cadastro', 'formsAcitions');
 
         Route::get('/corporativo/vaga/{vacancy_id}/editar', 'forms');
@@ -265,3 +270,44 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //companys
+
+
+//PERSON
+
+Route::middleware(['auth'])->group(function () {
+    Route::controller(PersonHomeController::class)->group(function () {
+        Route::get('/usuario/home', 'index');
+        Route::get('/usuario/configuracoes', 'config');
+        Route::put('/usuario/perfil/atualizar', 'configForms');
+        Route::get('/usuario/sair', 'logout');
+    });
+
+
+    /* Resumes */
+    Route::controller(PersonResumeController::class)->group(function () {
+        Route::get('/usuario/curriculo', 'forms');
+        Route::post('/usuario/curriculo/cadastro', 'formsAcition');
+        Route::get('/usuario/curriculo/detalhes', 'detail');
+
+        Route::get('/usuario/curriculo/{resume_id}/editar', 'forms');
+        Route::put('/usuario/curriculo/{resume_id}/editar', 'formsAcition');
+
+        Route::get('/usuario/curriculo/{resume_id}/excluir', 'delete');
+    });
+
+
+            /* Applications */
+    Route::controller(PersonApplicationsController::class)->group(function () {
+        Route::get('/usuario/candidaturas', 'home');
+
+        Route::get('/usuario/vaga/aplicacoes/curriculo/{app_id}', 'detail');
+        Route::get('/usuario/vaga/aplicacoes/curriculo/{app_id}/{option}', 'actions');
+    });
+
+     /* Vancacies */
+     Route::controller(PersonVacanciesController::class)->group(function () {
+
+        Route::get('/usuario/vaga/{vacancy_id}', 'detail');
+
+    });
+});

@@ -1,4 +1,4 @@
-@extends('corporate.layout')
+@extends('person.layout')
 
 @section('title', 'Vagas')
 
@@ -6,36 +6,11 @@
 
 <div class="layout-page">
 
-  <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-      <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-        <i class="bx bx-menu bx-sm"></i>
-      </a>
-    </div>
-
-    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-      <form action="{{ url('/admin/vagas/buscar') }}" method="POST">
-        <div class="navbar-nav align-items-center">
-          <div class="nav-item d-flex align-items-center">
-            @csrf
-            <button class="search-button"><i class="bx bx-search fs-4 lh-0"></i></button>
-            <input type="text" name="search" class="form-control border-0 shadow-none" placeholder="Buscar vagas..." aria-label="Search..." />
-          </div>
-        </div>
-      </form>
-
-
-    </div>
-  </nav>
 
   <div class="content-wrapper">
-
     <div class="container-xxl flex-grow-1 container-p-y">
       <div class="card">
-
-        <h5 class="card-header">Vagas Cadastradas / <a href="{{ url('/corporativo/empresas/cadastro/') }}"><button class="btn btn-primary btn-sm">Adicionar</button> <a>
-      
+        <h5 class="card-header">Vagas Aplicadas<a>
         </h5>
         <div class="table-responsive text-nowrap">
           @if(session('message'))

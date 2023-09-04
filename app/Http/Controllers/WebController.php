@@ -13,6 +13,7 @@ use App\Models\Categories;
 use App\Models\Contacts;
 use App\Models\User;
 use App\Models\Vacancies;
+use Illuminate\Console\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -170,11 +171,15 @@ class WebController extends Controller
 
     public function vacancyDetail(Request $request)
     {
+        $user = !empty(Auth::user()->id) ? Auth::user()->id : 0 ;
         $vacancy = Vacancies::with('company')
                     ->where("slug","=", $request->slug)
                     ->firstOrFail();
+        $application = Applications::where('user_id', $user)
+                                    ->where('vacancy_id', $vacancy->id)->get();
+          
 
-        return view('web.vacancies.vacancyDetail', compact('vacancy'));
+        return view('web.vacancies.vacancyDetail', compact('vacancy','application'));
     }
 
     /* CATEGORIES */

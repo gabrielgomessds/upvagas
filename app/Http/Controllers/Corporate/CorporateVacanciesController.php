@@ -36,11 +36,12 @@ class CorporateVacanciesController extends Controller
     public function forms(Request $request)
     {
         $formEdit = Vacancies::find($request->vacancy_id);
+        $userCompanys = Companys::where('user_id', Auth::user()->id)->get();
         $company = Companys::find(base64_decode($request->company_id));
         $categories = Categories::all();
 
         
-        return view('corporate.vacancies.forms', compact('formEdit', 'company', 'categories'));
+        return view('corporate.vacancies.forms', compact('formEdit', 'company', 'categories','userCompanys'));
     }
 
     public function search(Request $request)
@@ -69,7 +70,7 @@ class CorporateVacanciesController extends Controller
             $vacancy->hiring_type = $validatedData['hiring_type'];
             $vacancy->level = $validatedData['level'];
             $vacancy->situation = "open";
-            $vacancy->slug = Str::slug($validatedData['title']);
+            $vacancy->slug = Str::slug($validatedData['title'].uniqid(mt_rand()));
             
             
             if($vacancy->save()){
@@ -100,7 +101,7 @@ class CorporateVacanciesController extends Controller
             $vacancy->hiring_type = $validatedData['hiring_type'];
             $vacancy->level = $validatedData['level'];
             $vacancy->situation = $validatedData['situation'];
-            $vacancy->slug = Str::slug($validatedData['title']);
+            $vacancy->slug = Str::slug($validatedData['title'].uniqid(mt_rand()));
             
             if($vacancy->update()){
                 return redirect('/corporativo/vaga/'.$company_id.'/editar')->with('message', 'Vaga atualizado com sucesso!');

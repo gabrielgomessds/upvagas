@@ -59,48 +59,44 @@
 
         <ul class="menu-inner py-2">
 
-        <li class="menu-item @if(request()->is('corporativo/home') ) active @endif">
-            <a href="{{ url('corporativo/home') }}" class="menu-link">
+        <li class="menu-item @if(request()->is('usuario/home') ) active @endif">
+            <a href="{{ url('usuario/home') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
               <div data-i18n="Analytics">Home</div>
             </a>
           </li>
 
-          <li class="menu-item @if(  request()->is('corporativo/empresa/*') 
-                            || request()->is('corporativo/empresas/cadastro') 
-                            || request()->is('corporativo/empresas/*/editar') 
-                            || request()->is('corporativo/empresas/buscar/*')
-                            || request()->is('corporativo/usuario/*/empresas')
-                            || request()->is('corporativo/usuario/*/empresas')
-                            || request()->is('corporativo/empresas')
+
+          <li class="menu-item @if( 
+                               request()->is('usuario/curriculo') 
+                            || request()->is('usuario/curriculo/cadastro/*') 
+                            || request()->is('usuario/curriculo/*/editar') 
+                            || request()->is('usuario/curriculo/detalhes')
                             ) active @endif">
-            <a href="{{ url('corporativo/empresas') }}" class="menu-link ">
-              <i class="menu-icon tf-icons bx bxs-city"></i>
-              <div data-i18n="Analytics">Empresas</div>
+            <a href="{{ url('usuario/curriculo') }}" class="menu-link ">
+              <i class='menu-icon tf-icons bx bx-food-menu'></i>
+              <div data-i18n="Analytics">Curriculo</div>
             </a>
           </li>
 
 
           <li class="menu-item @if( 
-                               request()->is('corporativo/vagas') 
-                            || request()->is('corporativo/vaga/*') 
-                            || request()->is('corporativo/vagas/cadastro/*') 
-                            || request()->is('corporativo/vagas/cadastro') 
-                            || request()->is('corporativo/vagas/*/editar') 
-                            || request()->is('corporativo/vagas/buscar/*')
-                            || request()->is('corporativo/usuario/*/vagas')
-                            || request()->is('corporativo/categorias/*/vagas')
+                               request()->is('usuario/candidaturas') 
+                            || request()->is('usuario/vaga/*') 
+                           
                             ) active @endif">
-            <a href="{{ url('corporativo/vagas') }}" class="menu-link ">
+            <a href="{{ url('/usuario/candidaturas') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-layer"></i>
-              <div data-i18n="Analytics">Vagas</div>
+              <div data-i18n="Analytics">Candidaturas</div>
             </a>
           </li>
 
+       
+
           <li class="menu-item @if( 
-                               request()->is('corporativo/configuracoes') 
+                               request()->is('usuario/configuracoes') 
                             ) active @endif">
-            <a href="{{ url('corporativo/configuracoes') }}" class="menu-link ">
+            <a href="{{ url('usuario/configuracoes') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-cog"></i>
               <div data-i18n="Analytics">Configurações</div>
             </a>
@@ -114,7 +110,7 @@
           </li>
 
           <li class="menu-item">
-            <a href="{{url('corporativo/sair')}}" class="menu-link">
+            <a href="{{url('usuario/sair')}}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-power-off"></i>
               <div data-i18n="Analytics">Sair</div>
             </a>

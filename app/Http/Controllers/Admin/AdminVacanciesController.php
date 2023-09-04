@@ -64,7 +64,7 @@ class AdminVacanciesController extends Controller
             $vacancy->hiring_type = $validatedData['hiring_type'];
             $vacancy->level = $validatedData['level'];
             $vacancy->situation = "open";
-            $vacancy->slug = Str::slug($validatedData['title']);
+            $vacancy->slug = Str::slug($validatedData['title'].uniqid(mt_rand()));
             
             
             if($vacancy->save()){
@@ -95,7 +95,7 @@ class AdminVacanciesController extends Controller
             $vacancy->hiring_type = $validatedData['hiring_type'];
             $vacancy->level = $validatedData['level'];
             $vacancy->situation = $validatedData['situation'];
-            $vacancy->slug = Str::slug($validatedData['title']);
+            $vacancy->slug = Str::slug($validatedData['title'].uniqid(mt_rand()));
             
             if($vacancy->update()){
                 return redirect('/admin/vaga/'.$company_id.'/editar')->with('message', 'Vaga atualizado com sucesso!');

@@ -29,7 +29,7 @@ class Vacancies extends Model
 
     public function company()
     {
-        return $this->belongsTo(Companys::class);
+        return $this->belongsTo(Companys::class, 'company_id');
     }
 
     public function category()

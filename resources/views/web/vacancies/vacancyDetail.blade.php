@@ -43,8 +43,10 @@
 
                         @if($vacancy->situation == 'open')
                            
-                            @if(!empty($vacancy->applications->first()->user_id) == isset(auth()->user()->id) && isset(auth()->user()->id))
-                            <h3 class="text-primary">Você já se candidatou para essa vaga</h3>
+                            @if(!$application->isEmpty())
+                                <h3 class="text-primary">Você já se candidatou para essa vaga</h3>
+                            @elseif($application->isEmpty() && !empty(auth()->user()) && auth()->user()->type !== 'person')
+                                <h3 class="text-primary">Sua conta não permite fazer candidaturas</h3>
                             @else
                             <div class="">
                                 <form action="{{ url('/aplicar-vaga/'.base64_encode($vacancy->id)) }}" method="POST">

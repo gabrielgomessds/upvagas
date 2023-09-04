@@ -17,7 +17,7 @@ class Applications extends Model
 
     public function vacancies()
     {
-        return $this->hasOne(Vacancies::class, 'vacancy_id');
+        return $this->belongsTo(Vacancies::class, 'vacancy_id');
     }
 
     public function user()
